@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://unpkg.com/@rive-app/canvas@2.10.0"></script>
+    <title>Blog Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1e1e1e;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .gradient-box {
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 100px;
+            background: radial-gradient(ellipse at center top,
+                    rgba(18, 219, 233, 0.486) 50%,
+                    rgba(255, 165, 0, 0.5) 50%,
+                    rgba(6, 200, 214, 0.767) 10%,
+                    rgba(0, 0, 0, 0) 90%);
+            border-radius: 400px 400px 0 0;
+            filter: blur(80px);
+            z-index: 1;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1200px;
+            padding: 15px 40px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ff73, #ff008079);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .menu-bar li {
+            padding: 10px;
+        }
+
+        .menu-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .menu-bar a:hover {
+            color: #77dcf5;
+            transform: translateY(-3px);
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-container {
+            text-align: center;
+            max-width: 1000px;
+            margin: 150px auto;
+            color: rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.5s forwards;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .blog-title {
+            font-size: 60px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #FF3366, #00adc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .blog-text {
+            font-size: 22px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 20px auto;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 0 20px;
+        }
+
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .post-card {
+            background: #333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .post-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .post-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .post-card h3 {
+            margin-top: 15px;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .post-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .blog-title {
+                font-size: 40px;
+            }
+
+            .blog-text {
+                font-size: 18px;
+            }
+
+            .blog-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Gradient and Modal Enhancements */
+        .post-card {
+            background: linear-gradient(145deg, #6a6a6a, #3f3f3f);
+        }
+
+        .modal-content {
+            animation: fadeInModal 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInModal {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gradient-box"></div>
+    <div class="navbar">
+        <span class="logo">CeilingPro</span>
+        <div class="menu-bar">
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#service">Service</a></li>
+                <li><a href="#explore-products">Explore Products</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Blog Section -->
+    <div class="blog-container">
+        <div class="blog-title">Latest Blog Posts</div>
+        <p class="blog-text">
+            Stay updated with the latest trends, designs, and tips from the world of ceiling decor. Read our blog to get
+            inspired and discover the best solutions for your space.
+        </p>
+
+        <div class="blog-posts">
+            <div class="post-card" onclick="openModal('1.jpg')">
+                <img src="1.jpg" alt="Blog Post 1">
+                <h3>Ceiling Design Trends 2025</h3>
+                <p>Explore the top ceiling design trends to look out for in 2025...</p>
+            </div>
+            <div class="post-card" onclick="openModal('2.jpg')">
+                <img src="2.jpg" alt="Blog Post 2">
+                <h3>Innovative Ceiling Solutions</h3>
+                <p>Discover creative solutions that transform your space into a work of art...</p>
+            </div>
+            <div class="post-card" onclick="openModal('3.jpg')">
+                <img src="3.jpg" alt="Blog Post 3">
+                <h3>How to Choose the Right Ceiling for Your Home</h3>
+                <p>Find out the essential factors to consider when selecting a ceiling design...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Image -->
+    <div id="myModal" class="modal">
+        <span onclick="closeModal()"
+            style="position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; cursor: pointer;">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Modal Image">
+        </div>
+    </div>
+
+    <script>
+        // Modal Image Logic
+        function openModal(imgSrc) {
+            document.getElementById('modalImage').src = imgSrc;
+            document.getElementById('myModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

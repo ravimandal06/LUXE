@@ -1,0 +1,107 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sign-up {
+    background: black;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.hero {
+    margin: 50px 0;
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 20px;
+}
+
+.start-project {
+    background: black;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 50px 0;
+}
+
+.stats div {
+    text-align: center;
+}
+
+.stats span {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.stats p {
+    color: #777;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    gap: 20px;
+}
+
+.image1 {
+    width: 30%;
+    position: absolute;
+    right: 10%;
+    top: 0;
+}
+
+.image2 {
+    width: 50%;
+}

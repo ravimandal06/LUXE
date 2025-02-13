@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>LUXE Ceilings | Premium False Ceiling Solutions</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #030303;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABnRSTlMDY2ExYhVxh2YoAAAAQklEQVQ4y2NgQAX8/PyMLAwM/Bho4P///wz/GBgYkGlUAQYGBkYkmpEBLsDIAKeRBQQYGBgRNKMAAwMDgmYSNBMNAACaChZj0hrL+AAAAABJRU5ErkJggg==');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            z-index: 100;
+            background: rgba(3, 3, 3, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #D4AF37;
+        }
+
+        .logo {
+            font-family: 'Cormorant', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: white;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #D4AF37;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title span {
+            display: block;
+            background: linear-gradient(90deg, #D4AF37, #FFE5B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+            animation-delay: calc(var(--delay) * 0.2s);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+            animation-delay: 0.6s;
+        }
+
+        .services {
+            padding: 8rem 4rem;
+            background: linear-gradient(to bottom, #030303, #0A0A0A);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 2rem;
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            color: #D4AF37;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-family: 'Cormorant', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #D4AF37;
+        }
+
+        .features {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 4rem auto 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            color: #D4AF37;
+            font-size: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #D4AF37;
+            color: #030303;
+            border-radius: 3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            font-family: 'Cormorant', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #D4AF37;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            opacity: 0.8;
+        }
+
+        .model-section {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            /* Prevents interference with other elements */
+        }
+
+
+
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            background: #D4AF37;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            color: #333;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #scheduleForm label {
+            display: block;
+            margin: 0.5rem 0;
+        }
+
+        #scheduleForm input,
+        #scheduleForm textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #scheduleForm textarea {
+            resize: vertical;
+        }
+
+        #submit-schedule {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #D4AF37;
+            color: #030303;
+            border-radius: 3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        #submit-schedule:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <nav class="navbar">
+        <div class="logo">LUXE</div>
+        <div class="nav-links">
+            <a href="#services">Services</a>
+            <a href="about.html">About Us</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-subtitle">Premium False Ceiling Solutions</div>
+            <h1 class="hero-title">
+                <span style="--delay: 1">Transform Your</span>
+                <span style="--delay: 2">Space From</span>
+                <span style="--delay: 3">Above</span>
+            </h1>
+            <p class="hero-description">
+                Elevate your interiors with our bespoke false ceiling designs. We combine artistry with engineering to
+                create stunning overhead masterpieces that redefine luxury living.
+            </p>
+            <a href="#schedule-modal" class="cta-button" id="scheduleBtn">Schedule Consultation</a>
+        </div>
+
+
+        <!-- Modal for Scheduling Consultation -->
+        <div id="schedule-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Schedule a Consultation</h2>
+                <form id="scheduleForm">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="queries">Your Queries</label>
+                    <textarea id="queries" name="queries" rows="4" required></textarea>
+
+                    <label for="location">Your Location</label>
+                    <input type="text" id="location" name="location" placeholder="City or Address" required>
+
+                    <label for="consultation-date">Preferred Consultation Date</label>
+                    <input type="date" id="consultation-date" name="consultation-date" required>
+
+                    <button type="submit" id="submit-schedule" class="cta-button">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <section class="model-section" id="portfolio">
+            <div id="lottie-container" style="position: absolute; top: 0; right: 0; width: 400px; height: 400px;">
+            </div>
+        </section>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var container = document.getElementById('lottie-container');
+                container.style.width = "800px"; // Adjust width
+                container.style.height = "800px"; // Adjust height
+
+                lottie.loadAnimation({
+                    container: container,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'hello.json'
+                });
+            });
+
+        </script>
+
+
+    </section>
+
+
+
+    <section class="services" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <p class="section-subtitle">Comprehensive false ceiling solutions tailored to your space and style</p>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="service-title">POP Ceilings</h3>
+                <p>Intricate designs and patterns crafted with premium Plaster of Paris for timeless elegance.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-border-all"></i>
+                </div>
+                <h3 class="service-title">Grid Ceilings</h3>
+                <p>Modern modular solutions perfect for commercial spaces and contemporary homes.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="service-title">LED Integration</h3>
+                <p>Seamless integration of modern lighting solutions for ambient illumination.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Why Choose Us</h2>
+        <p class="section-subtitle">Experience excellence in every aspect of our service</p>
+
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <h4>Premium Materials</h4>
+                    <p>Only the finest quality materials sourced from trusted suppliers.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div>
+                    <h4>Expert Installation</h4>
+                    <p>Skilled craftsmen with years of experience in luxury installations.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <h4>Timely Completion</h4>
+                    <p>Projects delivered on schedule without compromising on quality.</p>
+                </div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <h4>10-Year Warranty</h4>
+                    <p>Confidence in our workmanship with comprehensive warranty coverage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        // Custom cursor (unchanged)
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Smooth scroll for navigation (unchanged)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById('schedule-modal');
+            const scheduleBtn = document.getElementById('scheduleBtn');
+            const closeModal = document.querySelector('.close-btn');
+            const submitBtn = document.getElementById('submit-schedule');
+            const scheduleForm = document.getElementById('scheduleForm');
+
+            // Open the modal when 'Schedule Consultation' button is clicked
+            scheduleBtn.addEventListener('click', function (e) {
+                modal.style.display = 'block';
+            });
+
+            // Close the modal
+            closeModal.addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            // Close modal if clicked outside of the modal
+            window.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Handle form submission
+            scheduleForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Get form data
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const queries = document.getElementById('queries').value;
+                const location = document.getElementById('location').value;
+                const consultationDate = document.getElementById('consultation-date').value;
+
+                // Send email with the form details
+                sendEmail(name, email, queries, location, consultationDate);
+
+                // Close the modal after submission
+                modal.style.display = 'none';
+
+                // Reset form
+                scheduleForm.reset();
+            });
+
+            // Function to send email using EmailJS
+            function sendEmail(name, email, queries, location, date) {
+                emailjs.send('service_i90boco', 'template_o94dwg5', {
+                    from_name: name,
+                    to_name: 'Service Provider',
+                    message: `Name: ${name}\nEmail: ${email}\nQueries: ${queries}\nLocation: ${location}\nPreferred Date: ${date}`,
+                    reply_to: email,
+                })
+                    .then(function (response) {
+                        alert('Consultation scheduled successfully!');
+                    }, function (error) {
+                        alert('Failed to send email: ' + error.text);
+                    });
+            }
+        });
+
+
+
+    </script>
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        emailjs.init("dSLvkkTXVlsED8W4c");  // Replace with your user ID from EmailJS
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>LUXE Ceiling Design</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #030303;
+            color: white;
+            font-family: 'Space Grotesk', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAElBMVEUAAAAAAAAAAAAAAAAAAAAAAADgKxmiAAAABnRSTlMDY2ExYhVxh2YoAAAAQklEQVQ4y2NgQAX8/PyMLAwM/Bho4P///wz/GBgYkGlUAQYGBkYkmpEBLsDIAKeRBQQYGBgRNKMAAwMDgmYSNBMNAACaChZj0hrL+AAAAABJRU5ErkJggg==');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            z-index: 100;
+            background: rgba(3, 3, 3, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #D4AF37;
+        }
+
+        .logo {
+            font-family: 'Cormorant', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: white;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: #D4AF37;
+        }
+
+        .menu-button {
+            width: 50px;
+            height: 50px;
+            background: #D4AF37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button:hover {
+            transform: scale(1.1);
+            background: white;
+            color: #030303;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant', serif;
+            font-size: 8vw;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .hero-title span {
+            display: block;
+            background: linear-gradient(90deg, #D4AF37, #FFE5B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+            animation-delay: calc(var(--delay) * 0.2s);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #D4AF37 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: float 20s infinite;
+            opacity: 0.15;
+        }
+
+        .projects {
+            padding: 8rem 2rem;
+            background: linear-gradient(to bottom, #030303, #0A0A0A);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            background: #111;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+        }
+
+        .project-info h3 {
+            font-family: 'Cormorant', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #D4AF37;
+        }
+
+        .project-card:hover .project-info {
+            transform: translateY(0);
+        }
+
+        .magnetic-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #D4AF37;
+            color: #030303;
+            border-radius: 3rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .magnetic-button:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .contact-section {
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, #0A0A0A, #030303);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 0.5rem;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #D4AF37;
+            outline: none;
+        }
+
+        .cursor {
+            width: 20px;
+            height: 20px;
+            background: #D4AF37;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(100px, 100px);
+            }
+
+            50% {
+                transform: translate(-50px, 200px);
+            }
+
+            75% {
+                transform: translate(-100px, 100px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <nav class="navbar">
+        <div class="logo">LUXE</div>
+        <div class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="service.html">Services</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-element" style="top: 20%; left: 20%;"></div>
+            <div class="floating-element" style="top: 60%; left: 60%;"></div>
+            <div class="floating-element" style="top: 30%; left: 80%;"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span style="--delay: 1">Redefining</span>
+                <span style="--delay: 2">Luxury Above</span>
+                <span style="--delay: 3">& Beyond</span>
+            </h1>
+            <div class="magnetic-button">Discover Excellence</div>
+        </div>
+    </section>
+
+    <section class="projects">
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="1.jpg" alt="Luxury Ceiling Design 1">
+                <div class="project-info">
+                    <h3>Royal Opulence</h3>
+                    <p>Handcrafted details and premium materials create an atmosphere of unparalleled luxury.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="2.jpg" alt="Luxury Ceiling Design 2">
+                <div class="project-info">
+                    <h3>Modern Grandeur</h3>
+                    <p>Where contemporary design meets timeless sophistication.</p>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="3.jpg" alt="Luxury Ceiling Design 3">
+                <div class="project-info">
+                    <h3>Artistic Vision</h3>
+                    <p>Bespoke ceiling installations that transform spaces into masterpieces.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <h2 class="hero-title">
+            <span style="--delay: 1">Elevate Your</span>
+            <span style="--delay: 2">Vision</span>
+        </h2>
+        <div class="contact-form">
+            <input type="text" class="form-input" placeholder="Your Name">
+            <input type="email" class="form-input" placeholder="Your Email">
+            <textarea class="form-input" placeholder="Share Your Vision" rows="5"></textarea>
+            <div class="magnetic-button">Begin Your Journey</div>
+        </div>
+    </section>
+    <!-- Location iframe -->
+    <section class="location-section" style="padding: 4rem 2rem; background: #111;">
+        <h2 class="hero-title" style="font-size: 2rem; margin-bottom: 2rem;">Find Us Here</h2>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.163421706451!2d2.292292215674831!3d48.85884427928702!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e671d6b9e7e607%3A0x50bb0391b8a75ec0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1611107024602!5m2!1sen!2sfr"
+            width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic-button').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+
+                button.style.transform = `translate(${deltaX * 10}px, ${deltaY * 10}px)`;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // Hover effect for logo
+        const logo = document.querySelector('.logo');
+        logo.addEventListener('mouseover', () => {
+            logo.style.color = '#D4AF37';
+        });
+        logo.addEventListener('mouseout', () => {
+            logo.style.color = 'white';
+        });
+    </script>
+</body>
+
+</html>
